@@ -1,18 +1,34 @@
-// import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
+import { IsEmail, Length } from "class-validator"
+import { Entity, Column, Index, OneToMany, BeforeInsert } from "typeorm"
+import bcrypt from 'bcryptjs';
 
-// @Entity()
-// export class User {
+@Entity('users')
+export class User {
 
-//     @PrimaryGeneratedColumn()
-//     id: number
+  @Index()
+  @IsEmail(undefined, {message: '이메일 주소가 잘못되었습니다.'})
+  @Length(1, 255, {message: '이메일 주소는 비워둘 수 없습니다.'})
+  @Column({unique: true})
+  email: string
 
-//     @Column()
-//     firstName: string
+  @Index()
+  @Length(3, 32, {message: '사용자 이름은 3자 이상이어야 합니다.'})
+  @Column({unique: true})
+  userName: string
 
-//     @Column()
-//     lastName: string
+  @Index()
+  @Length(6, 255, {message: '비밀번호는 6자리 이상이어야 합니다.'})
+  @Column()
+  password: string
 
-//     @Column()
-//     age: number
+  @OneToMany(() => Post, (post) => post.user)
+  posts: number
 
-// }
+  @OneToMany(() => Vote, (vote) => vote.user)
+  votes: number
+
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 6);
+  }
+}
