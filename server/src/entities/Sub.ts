@@ -1,3 +1,4 @@
+import BaseEntity from './Entity';
 import { Expose } from "class-transformer"
 import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm"
 import { User } from "./User"
@@ -9,7 +10,7 @@ export default class Sub extends BaseEntity {
   @Column({unique: true})
   name: string;
 
-  @Column
+  @Column()
   title: string;
 
   @Column({type: 'text', nullable: true})

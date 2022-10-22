@@ -1,4 +1,5 @@
-import {BaseEntity, BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany} from "typeorm";
+import BaseEntity from './Entity';
+import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany} from "typeorm";
 import {User} from "./User";
 import Post from "./Post";
 import {Exclude, Expose} from "class-transformer";
@@ -40,7 +41,8 @@ export default class Comment extends BaseEntity {
 
   @Expose() get  voteScore(): number {
     const initialValue = 0;
-    return this.votes?.reduce((previousValue, currentObject) => previousValue + (currentObject.value || 0), initialValue)
+    return this.votes?.reduce((previousValue, currentObject) =>
+      previousValue + (currentObject.value || 0), initialValue)
   }
 
   @BeforeInsert()
