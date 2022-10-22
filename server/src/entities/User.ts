@@ -1,9 +1,11 @@
 import { IsEmail, Length } from "class-validator"
-import { Entity, Column, Index, OneToMany, BeforeInsert } from "typeorm"
+import {Entity, Column, Index, OneToMany, BeforeInsert, BaseEntity} from "typeorm"
 import bcrypt from 'bcryptjs';
+import Post from "./Post";
+import Vote from "./Vote";
 
 @Entity('users')
-export class User {
+export class User extends BaseEntity {
 
   @Index()
   @IsEmail(undefined, {message: '이메일 주소가 잘못되었습니다.'})
@@ -14,7 +16,7 @@ export class User {
   @Index()
   @Length(3, 32, {message: '사용자 이름은 3자 이상이어야 합니다.'})
   @Column({unique: true})
-  userName: string
+  username: string
 
   @Index()
   @Length(6, 255, {message: '비밀번호는 6자리 이상이어야 합니다.'})

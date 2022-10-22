@@ -1,24 +1,25 @@
 import { Expose } from "class-transformer"
-import { BaseEntity, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm"
+import { Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm"
 import { User } from "./User"
+import Post from "./Post";
 
-@Entity
+@Entity('Sub')
 export default class Sub extends BaseEntity {
   @Index()
   @Column({unique: true})
-  name: string
+  name: string;
 
   @Column
-  title: string
+  title: string;
 
   @Column({type: 'text', nullable: true})
-  description: string
+  description: string;
 
   @Column({nullable: true})
-  bannerUrn: string
+  bannerUrn: string;
 
   @Column()
-  username: string
+  username: string;
 
   @ManyToOne(() => User)
   @JoinColumn({name: 'username', referencedColumnName: 'username'})
