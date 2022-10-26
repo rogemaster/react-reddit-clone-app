@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import { AppDataSource } from './data-source';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 import authRouters from './routes/auth';
 
@@ -14,6 +15,8 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(morgan('dev'));
+
+dotenv.config();
 
 app.get('/', (_, res) => res.send('running'));
 app.use('/api/auth', authRouters);
